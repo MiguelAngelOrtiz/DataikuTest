@@ -81,5 +81,5 @@ SetWorkingDirectory <- function()
 #Reads a CSV file
 LoadDataSet <- function(sDataSetName)
 {	
-	dsRetVal <- read.csv(sDataSetName, header = FALSE)
+	dsRetVal <- read.csv(sDataSetName, header = TRUE)
 }
