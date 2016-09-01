@@ -7,6 +7,7 @@
 
 #Script to do a descriptive analysis of the dataset
 
+#Descrives globally the complete dataset
 DescriveDataset <- function(Dataset)
 {
 	ClearConsole()
@@ -14,6 +15,7 @@ DescriveDataset <- function(Dataset)
 	WaitForUserKeyStroke()
 }
 
+#Shows the dataset structure
 GetStructureOfDataset <- function(Dataset)
 {
 	cat("----------------------------\n")
@@ -23,6 +25,8 @@ GetStructureOfDataset <- function(Dataset)
 	cat("\n")
 }
 
+#Iterates through all the variables in the dataset and shows relevant information
+#and graphics
 DescriveEachVariable <- function (Dataset)
 {
 	cat("\n-----------------------\n")
@@ -33,16 +37,16 @@ DescriveEachVariable <- function (Dataset)
 	{
 		ClearConsole()
 		ShowSummary(Dataset, i)
-		#WaitForUserKeyStroke()
 		
 		ShowGraphic(Dataset, i)
 		WaitForUserKeyStroke()
 	}
 }
 
+#Presents the name of the variable, its distribution and calculates the percentaje of
+#missing values
 ShowSummary <- function(Dataset, column)
 {
-	#ClearConsole()
 	cat("\nVariable: ", colnames(Dataset[column]), "\n")
 	cat(summary(Dataset[column]), "\n\n")
 	
@@ -54,6 +58,7 @@ ShowSummary <- function(Dataset, column)
 	cat("% of missing values (case '?'):", fPercentMissing, "%\n")
 }
 
+#Creates the proper arrangement of graphics depending on the type of variable
 ShowGraphic <- function(Dataset, column)
 {
 	x <- Dataset[,attributes(Dataset[column])$name]
@@ -99,6 +104,7 @@ ShowGraphic <- function(Dataset, column)
 	}
 }
 
+#Creates a correlation diagram
 ShowCorrelationMatrix <- function(Dataset)
 {
 	corrgram(Dataset, lower.panel=panel.shade,upper.panel=panel.pie, main="Correlation Matrix")

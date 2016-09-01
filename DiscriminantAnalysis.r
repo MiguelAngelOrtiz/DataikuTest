@@ -6,15 +6,15 @@
 #Author: Miguel Angel Ortiz#
 
 #Script to do a very simple prediction model based on Discriminant Analisys
-#The idea of the model is to predict the income level based on the number of weeks
-#worked per year
 
+#Governs the execution of the Discriminant Analysis
 DiscriminantAnalysis <- function()
 {
 	SplitData()
 	PerformDA()
 }
 
+#Splits the datasource into two groups: one in which people earn more than 50K and vice verza
 SplitData <- function()
 {
 	sSelection <- c("age", 
@@ -38,6 +38,7 @@ SplitData <- function()
 	cat("Done\n")
 }
 
+#Implementation of the DA algorithm
 PerformDA <- function()
 {
 	#Calculate Mean Vector of both sets
@@ -59,11 +60,10 @@ PerformDA <- function()
 	mA <<- mInvS %*% ( dsMeanIncLvl1 - dsMeanIncLvl0 )
 	t1Med <<- t ( as.matrix ( mA ) ) %*% as.matrix ( dsMeanIncLvl1 )
 	t2Med <<- t ( as.matrix ( mA ) ) %*% as.matrix ( dsMeanIncLvl0 )
-	
-	cat("Model done:")
-	cat("Done\n")
+	#TODO: Implement error handling
 }
 	
+#Routine to create the confussion matrix to evaluate the model
 TestDAPredictions <- function()
 {
 	inScoreCat11 <- 0
@@ -101,7 +101,9 @@ TestDAPredictions <- function()
 	cat("Prediction = >50K | <50K (Incorrect prediction): ", inScoreCat10, "\n")
 	cat("Prediction = <50K | <50K (Correct prediction): ", inScoreCat00, "\n")
 }
-	
+
+#Implements the criteria given the values T1 and T2, as well as the matrix A
+#Receives as parameter the vector to estimate the group to which it belongs
 PredictWithDAModel <- function(vX)
 {
 	inT <- t(as.matrix(mA)) %*% t(as.matrix(vX))

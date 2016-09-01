@@ -7,6 +7,7 @@
 
 #Script to execute the univariate descriptive analysis
 
+#Governs the execution of the Univariate Analysis
 ExecuteUnivariateAnalysis <- function()
 {
 	DescriveDataset(dsLearn)

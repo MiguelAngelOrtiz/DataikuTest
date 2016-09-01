@@ -8,7 +8,6 @@
 #Script to load the datasets into the workspace
 #Call the LoadAllDatasets function to read the datasets available in the Working Directory
 
-
 #Global Variables Definition
 sLearnDatasetFullName 		<<- "census_income_learn.csv"
 sLearnDatasetImpFullName 	<<- "census_income_learn_imp.csv"
@@ -94,7 +93,7 @@ SetWorkingDirectory <- function()
 }
 
 #LoadDataSet function
-#Reads a CSV file
+#Reads a CSV file and transforms missing values into "na"
 LoadDataSet <- function(sDataSetName)
 {	
 	dsRetVal <- read.csv(	sDataSetName, 
