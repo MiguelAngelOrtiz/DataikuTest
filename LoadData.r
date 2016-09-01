@@ -10,10 +10,10 @@
 
 
 #Global Variables Definition
-dsLearn <<- NULL
-dsTest  <<- NULL
-sLearnDatasetFullName <<- "census_income_learn.csv"
-sTestDataSetFullName  <<- "census_income_test.csv"
+sLearnDatasetFullName 		<<- "census_income_learn.csv"
+sLearnDatasetImpFullName 	<<- "census_income_learn_imp.csv"
+sTestDataSetFullName  		<<- "census_income_test.csv"
+sTestDataSetImpFullName		<<- "census_income_test_imp.csv"
 
 #LoadAllDatasets function
 #Sets the Working Directory and then loads the datasets
@@ -27,7 +27,23 @@ LoadAllDatasets <- function()
 			dsTest <<- LoadDataSet(sTestDataSetFullName)
 			if(!is.null(dsTest))
 			{
-				cat("All datasets loaded successfuly\n")
+				dsLearnImp <<- LoadDataSet(sLearnDatasetImpFullName)
+				if(!is.null(dsLearnImp))
+				{
+					dsTestImp <<- LoadDataSet(sTestDataSetImpFullName)
+					if(!is.null(dsTestImp))
+					{
+						cat("All datasets loaded successfuly\n")
+					}
+					else
+					{
+						cat("Error loading ", sTestDataSetImpFullName, "\n")
+					}
+				}
+				else
+				{
+					cat("Error loading ", sLearnDatasetImpFullName, "\n")
+				}
 			}
 			else
 			{
@@ -39,7 +55,6 @@ LoadAllDatasets <- function()
 			cat("Error loading ", sLearnDatasetFullName, "\n")
 		}
 	}
-	
 }
 
 #SetWorkingDirectory function
@@ -48,13 +63,14 @@ SetWorkingDirectory <- function()
 {
 	inRetVal <- 0
 	
-	cat("\nCurrent Working Directory is: ", getwd(), "\n")
-	sAns <- readline("Would you like to change it? y/n\n")
+	cat("\nThe scripts are going to be uploaded from:", getwd(), "\n")
+	sAns <- readline("Would you like to change this path? y/n\n")
 	
 	if(substr(sAns, 1, 1) == "Y" || substr(sAns, 1, 1) =="y")
 	{
-		sAns = readline("Enter the new path (use double \\ or single / to separate folders)\n\n")
-		setwd(sAns)
+		#sAns = readline("Enter the new path (use double \\ or single / to separate folders)\n\n")
+		#setwd(sAns)
+		setwd(choose.dir())
 		if(!is.null(getwd()))
 		{
 			inRetVal = 1
@@ -81,5 +97,8 @@ SetWorkingDirectory <- function()
 #Reads a CSV file
 LoadDataSet <- function(sDataSetName)
 {	
-	dsRetVal <- read.csv(sDataSetName, header = TRUE)
+	dsRetVal <- read.csv(	sDataSetName, 
+							header = TRUE, 
+							na.strings = " ?" 
+						)
 }
